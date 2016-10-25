@@ -5,9 +5,11 @@ db.createCollection('joe')
 db.createCollection('orders')
 
 // 2.Insert at least 3 documents that represent an order. IMPORTANT: See section below for fields.
-db.orders.insert({orderDate: new Date(), orderTotal: 100, lineItems: [{unitPrice: 25}, {quantity: 4}, {productName: 'cat'}]})
-db.orders.insert({orderDate: Date('2015-01-01'), orderTotal: 49, lineItems: [{unitPrice: 1}, {quantity: 49}, {productName: 'rubber band'}]})
-db.orders.insert({orderDate: Date('2010-04-11'), orderTotal: 10000, lineItems: [{unitPrice: 10000}, {quantity: 1}, {productName: 'plane'}]})
+db.orders.insert({orderDate: new Date(), orderTotal: 100, lineItems: [{productName: 'car', quantity: '250', unitPrice: 3}, {productName: 'rubber band', quantity: 10000, unitPrice: 0.50}, {productName: 'cat', quantity: 7, unitPrice: 25}]})
+
+db.orders.insert({orderDate: Date('2015-01-01'), orderTotal: 49, lineItems: [{productName: 'car', quantity: '3', unitPrice: 1}, {productName: 'house', quantity: 49, unitPrice: '100'}, {productName: 'rubber band', quantity: 1000, unitPrice: 0.50}]})
+
+db.orders.insert({orderDate: Date('2010-04-11'), orderTotal: 10000, lineItems: [{productName: 'rubber band', quantity: 10030, unitPrice: 0.50}, {productName: 'cat', quantity: 12, unitPrice: 25}, {productName: 'plane', quantity: 1, unitPrice: 10000}]})
 
 // 3.Find a single order document, any order document.
 db.orders.find({orderTotal: 100})
@@ -25,7 +27,7 @@ db.orders.find({orderDate: {$gt: Date(2016-01-01)}})
 db.orders.find( { $and: [ { "lineItems.quantity": { $lt: 50 } }, { "lineItems.quantity": { $gt: 5 } } ] } )
 
 // 8.Update one of your line items to 42.99. HINT: Look at dot notation
-db.orders.update( {"lineItems.productName": /cat/}, {$set: {lineItems: [{unitPrice: 42.99}]}} )
+db.orders.update( {"lineItems.productName": /cat/}, {$set: {"lineItems.$.unitPrice": 42.99}} )
 
 // 9.Remove one of your orders.
 db.orders.remove({"lineItems.productName": /plane/})
