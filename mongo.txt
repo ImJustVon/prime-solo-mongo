@@ -30,4 +30,4 @@ db.orders.find( { $and: [ { "lineItems.quantity": { $lt: 50 } }, { "lineItems.qu
 db.orders.update( {"lineItems.productName": /cat/}, {$set: {"lineItems.$.unitPrice": 42.99}} )
 
 // 9.Remove one of your orders.
-db.orders.remove({"lineItems.productName": /plane/})
+db.orders.remove({orderTotal: 10000})
